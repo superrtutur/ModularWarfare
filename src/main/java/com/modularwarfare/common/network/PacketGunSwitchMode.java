@@ -33,10 +33,11 @@ public class PacketGunSwitchMode extends PacketBase {
             GunType gunType = itemGun.type;
             WeaponFireMode fireMode = GunType.getFireMode(entityPlayer.getHeldItemMainhand());
 
-            if (fireMode == null || gunType.fireModes.length <= 1)
+
+            if (fireMode == null)
                 return;
 
-            int spot = 0;
+            int spot = -1;
             int length = gunType.fireModes.length;
             for (int i = 0; i < length; i++) {
                 WeaponFireMode foundFireMode = gunType.fireModes[i];
@@ -44,8 +45,18 @@ public class PacketGunSwitchMode extends PacketBase {
                     spot = i;
                 }
             }
-            spot = spot + 1 >= length ? 0 : spot + 1;
-            itemGun.onGunSwitchMode(entityPlayer, entityPlayer.world, entityPlayer.getHeldItemMainhand(), itemGun, gunType.fireModes[spot]);
+
+            if (spot == -1) {
+                spot = 0;
+            } else {
+                spot = spot + 1 >= length ? -1 : spot + 1;
+            }
+
+            if (spot == -1) {
+                itemGun.onGunSwitchMode(entityPlayer, entityPlayer.world, entityPlayer.getHeldItemMainhand(), itemGun, WeaponFireMode.SAFE);
+            } else {
+                itemGun.onGunSwitchMode(entityPlayer, entityPlayer.world, entityPlayer.getHeldItemMainhand(), itemGun, gunType.fireModes[spot]);
+            }
         }
     }
 
@@ -61,10 +72,12 @@ public class PacketGunSwitchMode extends PacketBase {
             GunType gunType = itemGun.type;
             WeaponFireMode fireMode = GunType.getFireMode(entityPlayer.getHeldItemMainhand());
 
-            if (fireMode == null || gunType.fireModes.length <= 1)
+
+
+            if (fireMode == null)
                 return;
 
-            int spot = 0;
+            int spot = -1;
             int length = gunType.fireModes.length;
             for (int i = 0; i < length; i++) {
                 WeaponFireMode foundFireMode = gunType.fireModes[i];
@@ -72,9 +85,19 @@ public class PacketGunSwitchMode extends PacketBase {
                     spot = i;
                 }
             }
-            spot = spot + 1 >= length ? 0 : spot + 1;
-            itemGun.onGunSwitchMode(entityPlayer, entityPlayer.world, entityPlayer.getHeldItemMainhand(), itemGun,
-                    gunType.fireModes[spot]);
+            if (spot == -1) {
+                spot = 0;
+            } else {
+                spot = spot + 1 >= length ? -1 : spot + 1;
+            }
+
+            if (spot == -1) {
+                itemGun.onGunSwitchMode(entityPlayer, entityPlayer.world, entityPlayer.getHeldItemMainhand(), itemGun,
+                        WeaponFireMode.SAFE);
+            } else {
+                itemGun.onGunSwitchMode(entityPlayer, entityPlayer.world, entityPlayer.getHeldItemMainhand(), itemGun,
+                        gunType.fireModes[spot]);
+            }
         }
     }
     

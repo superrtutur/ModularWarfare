@@ -127,7 +127,7 @@ public class GunType extends BaseType {
     public float recoilAimReducer = 0.8F;
 
     /**
-     * The firing modes of the gun. SEMI, FULL, BURST
+     * The firing modes of the gun. SEMI, FULL, BURST, SAFE
      */
     public WeaponFireMode[] fireModes = new WeaponFireMode[]{WeaponFireMode.SEMI};
 
@@ -319,6 +319,9 @@ public class GunType extends BaseType {
     }
 
     public boolean hasFireMode(WeaponFireMode fireMode) {
+        if (fireMode == WeaponFireMode.SAFE) {
+            return true;
+        }
         if (fireModes != null) {
             for (int i = 0; i < fireModes.length; i++) {
                 if (fireModes[i] == fireMode) {

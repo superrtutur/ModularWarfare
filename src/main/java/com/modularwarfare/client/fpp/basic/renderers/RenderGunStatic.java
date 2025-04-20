@@ -631,7 +631,12 @@ public class RenderGunStatic extends CustomItemRenderer {
                             GL11.glPushMatrix();
                             {
                                 WeaponFireMode fireMode = GunType.getFireMode(item);
-                                float switchAngle = fireMode == WeaponFireMode.SEMI ? model.switchSemiRot : fireMode == WeaponFireMode.FULL ? model.switchAutoRot : fireMode == WeaponFireMode.BURST ? model.switchBurstRot : 0F;
+
+                                float switchAngle = fireMode == WeaponFireMode.SEMI ? model.switchSemiRot :
+                                        fireMode == WeaponFireMode.FULL ? model.switchAutoRot :
+                                                fireMode == WeaponFireMode.BURST ? model.switchBurstRot :
+                                                        fireMode == WeaponFireMode.SAFE ? 0F :
+                                                                0F;
                                 GL11.glTranslatef(model.switchRotationPoint.x, model.switchRotationPoint.y, model.switchRotationPoint.z);
                                 GL11.glRotatef(switchAngle, 0, 0, 1);
                                 GL11.glTranslatef(-model.switchRotationPoint.x, -model.switchRotationPoint.y, -model.switchRotationPoint.z);
